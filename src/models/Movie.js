@@ -31,7 +31,7 @@ const movieSchema=new mongoose.Schema({
     comments:[{
         user:{
             type:mongoose.Schema.Types.ObjectId,
-            reg:"User"
+            ref:"User"
         },
         text:{
             type:String

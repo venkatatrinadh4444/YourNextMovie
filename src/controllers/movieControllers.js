@@ -117,7 +117,7 @@ const addComment=async(req,res)=> {
                 user:_id,
                 text
             }
-        }},{new:true})
+        }},{new:true}).populate('comments.user','username')
 
         return res.status(200).json({msg:'comment added',updatedComments:currentMovie.comments})
     } catch (error) {
@@ -140,7 +140,11 @@ const fetchingLikes=async(req,res)=> {
 const fetchingComments=async(req,res)=> {
     try {
         const {id}=req.params
-        const currentMovie=await Movie.findById(id)
+        const currentMovie=await Movie.findById(id).populate({
+            path:'comments.user',
+            select:'username'
+        })
+
         return res.status(200).json({comments:currentMovie.comments})
     } catch (error) {
         console.log("Error occured at fetching movie comments",error)
